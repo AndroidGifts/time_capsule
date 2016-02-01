@@ -1,2 +1,9 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<h1>User Info</h1>
+
+<p>User Name: <%= @user.first_name + ' ' + @user.last_name %></p>
+<p>User Mail: <%= @user.user_mail %></p>
+<p>User Image: <%= @user.user_avatar %></p>
+
+<%= link_to( "Edit User", {:controller => 'users', :action => 'edit', :id => @user.id} ) %>
+<br>
+<%= link_to( "Delete User", {:controller => 'users', :action => 'destroy', :id => @user.id} ) %>
