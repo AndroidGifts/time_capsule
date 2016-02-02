@@ -1,2 +1,5 @@
-<h1>Messages#edit</h1>
-<p>Find me in app/views/messages/edit.html.erb</p>
+<h1>Edit Message</h1>
+
+<%= form_for(@message, html: { multipart: true }) do |form| %>
+	<%= render :partial => 'shared/msg_form', :locals => {:form => form} %>
+<% end %>

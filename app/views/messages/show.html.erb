@@ -1,2 +1,15 @@
-<h1>Messages#show</h1>
-<p>Find me in app/views/messages/show.html.erb</p>
+<%= link_to( "Edit Message", edit_message_path(@message) ) %>
+<%= link_to( "Delete the message", message_path(@message), method: :delete, data: {confirm: 'Are you sure?'} ) %>
+
+<br>
+<h2><%= @message.subject %></h2>
+
+<p>Message To: <%= @message.msg_to %></p>
+<p>Content: <%= @message.content %></p>
+<p>Delivery Date To: <%= @message.delivery_date %></p>
+<p>Delivery Time: <%= @message.delivery_time %></p>
+<p>Public: <%= @message.msg_public %> </p>
+
+<h4>Likes Count: <%= @message.like_count %> </h4>
+
+<h4>Comments Count: <%= @message.comments.count %> </h4>

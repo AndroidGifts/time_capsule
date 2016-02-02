@@ -14,24 +14,32 @@
 ActiveRecord::Schema.define(version: 20160201121837) do
 
   create_table "comments", force: :cascade do |t|
+    t.integer  "message_id"
+    t.integer  "user_id"
     t.text     "content"
-    t.integer  "plus_count"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "plus_count", default: 0
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
+  add_index "comments", ["message_id"], name: "index_comments_on_message_id"
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
+
   create_table "messages", force: :cascade do |t|
-    t.boolean  "msg_public"
+    t.integer  "user_id"
+    t.boolean  "msg_public",    default: false
     t.text     "msg_to"
     t.string   "subject"
     t.text     "content"
-    t.integer  "like_count"
-    t.integer  "comment_count"
+    t.integer  "like_count",    default: 0
+    t.integer  "comment_count", default: 0
     t.string   "delivery_date"
     t.string   "delivery_time"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
+
+  add_index "messages", ["user_id"], name: "index_messages_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"

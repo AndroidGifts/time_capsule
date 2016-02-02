@@ -1,0 +1,9 @@
+Message to: <%= form.text_field :msg_to, :required => true %><br>
+Subject: <%= form.text_field :subject, :required => true %><br>
+Content: <%= form.text_field :content, :required => true %><br>
+Delivery Date: <%= form.text_field :delivery_date, :required => true %><br>
+Delivery Time: <%= form.text_field :delivery_time, :required => true %><br>
+<%= hidden_field_tag :msg_public, false %>
+<%= check_box_tag :msg_public, 'true' %>
+<%= label_tag :msg_public, "Make it public" %><br>
+<%= form.submit %>

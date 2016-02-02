@@ -1,2 +1,29 @@
-<h1>Messages#index</h1>
-<p>Find me in app/views/messages/index.html.erb</p>
+<h1>All Messages</h1>
+
+<%= link_to( "Add new message", new_message_path ) %>
+
+<table>
+	<tr>
+		<th>Public</th>
+		<th>To</th>
+		<th>subject</th>
+		<th>content</th>
+		<th>Like Count</th>
+		<th>Comment Count</th>
+		<th>Delivery Date</th>
+		<th>Delivery Time</th>
+	</tr>
+
+	<% @messages.each do |msg| %>
+	<tr>
+		<td><%= msg.msg_public %></td>
+		<td><%= msg.msg_to %></td>
+		<td><%= link_to( msg.subject, message_path(msg) ) %></td>
+		<td><%= msg.content %></td>
+		<td><%= msg.like_count %></td>
+		<td><%= msg.comment_count %></td>
+		<td><%= msg.delivery_date %></td>
+		<td><%= msg.delivery_time %></td>
+	</tr>
+	<% end %>
+</table>
