@@ -46,13 +46,13 @@ class UsersController < ApplicationController
     redirect_to(:action => 'index')
   end
 
-  # App send user_mail, first_name, last_name, user_avatar
-  # Check the user_mail sent from the app
+  # App send email, first_name, last_name, user_avatar
+  # Check the email sent from the app
   # If user already exist, respond with the user ID
   # If user doesn't exist, create new user and respond with the user ID
   # If user couldn't be saved, respond with 0
   def user_login
-    @user = User.find_by_user_mail(params[:user_mail])
+    @user = User.find_by_email(params[:email])
 
     if @user.present?
       # response -- User Found and this is his ID
@@ -61,7 +61,7 @@ class UsersController < ApplicationController
       # User Not found, will create one and this is his ID
       render :text => "User doesn't exist"
 
-      new_user = User.new(:user_mail => params[:user_mail], :first_name => params[:first_name], 
+      new_user = User.new(:email => params[:email], :first_name => params[:first_name], 
         :last_name => params[:last_name], :user_avatar => params[:user_avatar])
 
       if new_user.save
@@ -76,6 +76,6 @@ class UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :user_mail, :user_avatar)
+    params.require(:user).permit(:first_name, :last_name, :email, :user_avatar)
   end
 end

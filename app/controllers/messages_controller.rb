@@ -1,19 +1,20 @@
 class MessagesController < ApplicationController
-  
+  before_action :find_post, only: [:show, :edit, :update, :delete, :destroy]
+  before_action :authenticate_user!, except: [:index, :show]
+
   def index
     @messages = Message.all
   end
 
   def show
-    @message = Message.find(params[:id])
   end
 
   def new
-    @message = Message.new
+    @message = current_user.messages.build
   end
 
   def create
-    @message = Message.new(message_params)
+    @message = current_user.messages.build(message_params)
     @message.msg_public = params[:msg_public]
 
     if @message.save
@@ -24,11 +25,9 @@ class MessagesController < ApplicationController
   end
 
   def edit
-    @message = Message.find(params[:id])
   end
 
   def update
-    @message = Message.find(params[:id])
     @message.update(:msg_public => params[:msg_public])
     if @message.update(message_params)
       redirect_to message_path(@message)
@@ -38,11 +37,9 @@ class MessagesController < ApplicationController
   end
 
   def delete
-    @message = Message.find(params[:id])
   end
 
   def destroy
-    @message = Message.find(params[:id])
     @message.destroy
     redirect_to root_path
   end
@@ -52,6 +49,11 @@ class MessagesController < ApplicationController
     self.increment!(:like_count)
 
     render :nothing => true
+  end
+
+  private
+  def find_post
+    @message = Message.find(params[:id])
   end
 
   def message_params
