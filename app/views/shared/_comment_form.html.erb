@@ -1,0 +1,4 @@
+<%= form_for(:comment, :url => {:controller => 'comments', :action => 'create', :message_id => @message.id}) do |form| %>
+	<%= form.text_field :content, :required => true %>
+	<%= form.submit %>
+<% end %> 

@@ -13,3 +13,9 @@
 <h4>Likes Count: <%= @message.like_count %> </h4>
 
 <h4>Comments Count: <%= @message.comments.count %> </h4>
+
+<%= render @message.comments %>
+
+<h3>Add a comment</h3>
+
+<%= render 'shared/comment_form' %>
