@@ -2,11 +2,18 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
+    #render json: @users
+  end
+
+  def get_all_users
+    @users = User.first
+    @users.full_name = @users.first_name + ' ' + @users.last_name
     render json: @users
   end
 
   def show
     @user = User.find(params[:id])
+    #render json: @user
   end
 
   def new
@@ -52,27 +59,39 @@ class UsersController < ApplicationController
   # If user already exist, respond with the user ID
   # If user doesn't exist, create new user and respond with the user ID
   # If user couldn't be saved, respond with 0
+  # Params : email, first_name, last_name, user_avatar
+  # Example : http://localhost:3000/users/user_login?email=foo@gmail.com&first_name=foo&last_name=doo&user_avatar=myavatar
+  # Response : code, user_id, msg
   def user_login
     @user = User.find_by_email(params[:email])
 
     if @user.present?
       # response -- User Found and this is his ID
-      render :text => "User exist"
+      response = { "code" => 1, "user_id" => @user.id, "msg" => "User Found" }
     else
-      # User Not found, will create one and this is his ID
-      render :text => "User doesn't exist"
-
       new_user = User.new(:email => params[:email], :first_name => params[:first_name], 
         :last_name => params[:last_name], :user_avatar => params[:user_avatar])
 
+      new_user.full_name = params[:first_name] + ' ' + params[:last_name]
+
       if new_user.save
-        # response -- with new user ID
-        puts "New user saved and his ID "
+        # User Not found, will create one and this is his ID
+        response = { "code" => 1, "user_id" => new_user.id, "msg" => "New User Created" }
       else
         # response -- with 0, Failed to create new user
-        puts "User can't be created"
+        response = { "code" => 0, "msg" => "User Can't be created" }
       end
     end
+
+    # Send the response in JSON
+    render json: response
+  end
+
+  # Params : user_id
+  # Example : http://localhost:3000/users/get_user_details?user_id=22
+  def get_user_details
+    @user = User.find_by_id(params[:user_id])
+    render json: @user
   end
 
   private

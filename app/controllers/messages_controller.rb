@@ -1,7 +1,6 @@
 class MessagesController < ApplicationController
   before_action :find_post, only: [:show, :edit, :update, :delete, :destroy]
-  before_action :authenticate_user!, except: [:index, :show]
-
+  
   def index
     @messages = Message.all
     render json: @messages
@@ -11,11 +10,11 @@ class MessagesController < ApplicationController
   end
 
   def new
-    @message = current_user.messages.build
+    @message = Message.new
   end
 
   def create
-    @message = current_user.messages.build(message_params)
+    @message = Message.new(message_params)
     @message.msg_public = params[:msg_public]
 
     if @message.save

@@ -7,14 +7,7 @@
   	<%= csrf_meta_tags %>
 </head>
 <body>
-
-	<% if user_signed_in? %>
-			<%= link_to( "Add new message", new_message_path ) %>
-	<% else %>
-			<%= link_to "Sign Up", new_user_registration_path %>
-			
-			<%= link_to "Sign In", new_user_session_path %>
-	<% end %>
+	<%= link_to( "Add new message", new_message_path ) %>
 
 	<p class="notice"><%= notice %></p>
 	<p class="alert"><%= alert %></p>
