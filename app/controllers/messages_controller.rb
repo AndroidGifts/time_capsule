@@ -13,9 +13,11 @@ class MessagesController < ApplicationController
     @message = Message.new
   end
 
+  # user_id, subject, content, msg_to, delivery_date, delivery_time, msg_public 
   def create
     @message = Message.new(message_params)
     @message.msg_public = params[:msg_public]
+    @message.user_id = params[:user_id]
 
     if @message.save
       redirect_to message_path(@message)
@@ -49,6 +51,11 @@ class MessagesController < ApplicationController
     self.increment!(:like_count)
 
     render :nothing => true
+  end
+
+  def get_public_messages
+    @messages = Message.msg_public
+    render json: @messages
   end
 
   private
