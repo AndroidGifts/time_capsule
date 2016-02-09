@@ -68,8 +68,8 @@ class MessagesController < ApplicationController
   # Example: http://localhost:3000/messages/get_public_messages
   def get_public_messages
     @messages = Message.msg_public
-    if messages.empty?
-      response = { "code" => 0, "msg" => "No Messages Found" }
+    if @messages.empty?
+      render json: { "code" => 0, "msg" => "No Messages Found" }
     else
       render json: @messages, each_serializer: PublicMessagesSerializer
     end
