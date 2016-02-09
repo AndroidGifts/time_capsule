@@ -1,11 +1,15 @@
 Rails.application.routes.draw do
-  match ':controller(/:action(/:id))', :via => [:get, :post]
-
   resources :messages do
     resources :comments
+
+    get :get_public_messages, :on => :collection
+    get :create_new_message, :on => :collection
+    get :create_comment, :on => :collection
   end
 
   root "messages#index"
+
+  match ':controller(/:action(/:id))', :via => [:get, :post]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

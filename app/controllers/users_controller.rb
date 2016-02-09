@@ -72,8 +72,6 @@ class UsersController < ApplicationController
       new_user = User.new(:email => params[:email], :first_name => params[:first_name], 
         :last_name => params[:last_name], :user_avatar => params[:user_avatar])
 
-      new_user.full_name = params[:first_name] + ' ' + params[:last_name]
-
       if new_user.save
         # User Not found, will create one and this is his ID
         response = { "code" => 1, "user_id" => new_user.id, "msg" => "New User Created" }
@@ -88,6 +86,7 @@ class UsersController < ApplicationController
   end
 
   # Params : user_id
+  # Returned Params: id, full_name, user_avatar
   # Example : http://localhost:3000/users/get_user_details?user_id=22
   def get_user_details
     @user = User.find_by_id(params[:user_id])
